@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^4.2.1",
+    "dotenv": "^16.0.1",
     "postcss": "^8.4.4",
     "sass": "^1.50.0",
     "sass-loader": "^10.2.1",
