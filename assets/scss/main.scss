@@ -30,25 +30,42 @@ h1, h2, h3, a {
 }
 
 header {
-    @apply absolute z-20 top-0 left-0 w-full h-auto py-2;
+    @apply absolute z-20 top-0 left-0 w-full h-auto py-2 bg-transparent opacity-0 transition-all pointer-events-none;
+
+    &.header-visible {
+        @apply opacity-100 pointer-events-auto;
+    }
+
+    &.header-background {
+        @apply bg-neutral-800;
+    }
 
     .container {
-        @apply flex justify-between;
+        @apply flex justify-center md:justify-between;
 
         .logo {
-            @apply text-primary-400;
+            @apply hidden md:block text-primary-400;
         }
 
         nav {
+            @apply pl-4 md:pl-0 overflow-x-auto;
+
+            &::-webkit-scrollbar {
+                height: 8px; /* height of the entire scrollbar */
+            }            
+            &::-webkit-scrollbar-thumb {
+                border-width: 2px;
+            }
+
             ul {
                 @apply flex space-x-5 py-2;
 
                 li {
                     a {
-                        @apply font-secondary text-secondary-300 hover:text-primary-400 transition-colors;
+                        @apply whitespace-nowrap font-secondary text-secondary-300 hover:text-primary-400 transition-colors;
 
                         span {
-                            @apply text-primary-400;
+                            @apply block md:inline-block text-primary-400;
                         }
 
                         &.btn {
@@ -62,29 +79,38 @@ header {
 }
 
 .overlay {
-    padding-bottom: 190px;
-    @apply fixed z-10 w-full h-full top-0 px-8 flex justify-between items-end pointer-events-none;
+    @apply fixed z-10 w-full md:h-full bottom-0 md:bottom-auto md:top-0 pt-2 md:pt-0 md:px-8 md:pb-48 flex flex-row space-x-6 md:space-x-0 justify-center md:justify-between items-end bg-transparent opacity-0 md:opacity-100 pointer-events-none transition-all;
 
     & > * {
-        @apply flex flex-col items-center pointer-events-auto;
+        @apply pb-2 md:pb-0 flex md:flex-col items-center pointer-events-none md:pointer-events-auto transition-all;
         
         &:after {
             content: '';
-            height: 150px;
-            width: 1px;
             
-            @apply absolute bottom-0 bg-secondary-400; 
+            @apply absolute left-0 md:left-auto md:bottom-0 md:h-40 md:w-0 md:border md:border-t-0 md:border-l-0 md:border-secondary-400; 
         }
     }
 
+    &.overlay-visible {
+        @apply opacity-100;
+
+        & > * {
+            @apply pointer-events-auto;
+        }
+    }
+
+    &.overlay-background {
+        @apply bg-neutral-800 md:bg-transparent;
+    }
+
     .links {
-        @apply flex flex-col space-y-6 items-center;            
+        @apply flex space-x-6 md:flex-col md:space-y-6 md:space-x-0 items-center;            
     }
 
     .email {
+
         a {
-            writing-mode: vertical-lr; 
-            @apply font-secondary;
+            @apply font-secondary md:text-vertical;
         }
     }
 
@@ -95,11 +121,12 @@ header {
 
 .home-page {
     scroll-snap-type: y proximity;
-    @apply h-screen overflow-y-scroll;
+
+    @apply h-screen overflow-y-scroll overflow-x-hidden;
 
     & > section {
         scroll-snap-align: center;
-        @apply relative flex flex-wrap items-center min-h-screen overflow-hidden;
+        @apply relative flex flex-wrap items-center min-h-screen;
     
         .container {
             max-width: 1000px;
@@ -133,7 +160,7 @@ section.top {
     .wrapper {
         z-index: 1;
         max-width: 1000px;
-        @apply relative mx-auto h-screen flex flex-col justify-center;
+        @apply relative mx-auto h-screen flex flex-col justify-center px-4 md:px-0 text-center md:text-left;
 
         p {    
             @apply text-xl text-secondary-500 max-w-3xl;
@@ -144,10 +171,10 @@ section.top {
         }
 
         h1 {
-            @apply mt-4 mb-6;
+            @apply text-5xl md:text-6xl mt-4 mb-6;
 
             span {
-                @apply block mt-4 text-secondary-400;
+                @apply block md:mt-4 text-secondary-400;
             }
         }
     }
@@ -157,10 +184,11 @@ section.about {
     @apply bg-secondary-700;
 
     .container {
-        @apply flex-nowrap md:flex-row-reverse;
+        @apply px-4 pt-4 pb-8 md:pt-10 md:pb-10 flex-wrap md:flex-nowrap justify-center md:flex-row-reverse space-y-6;
 
         .about-photo {
             min-width: 300px;
+            max-width: 98vw;
             @apply flex flex-auto rounded;
 
             .wrapper {
@@ -200,7 +228,7 @@ section.about {
         }
 
         .about-content {
-            @apply pr-12 flex flex-col items-start;
+            @apply pr-4 pl-4 md:pr-12 md:pl-0 flex flex-col items-start;
 
             p {
                 @apply text-justify;
@@ -231,10 +259,20 @@ section.about {
 }
 
 section.work {
+    @apply mb-20;
+
     scroll-snap-align: start;
 
+    .container {
+        @apply px-4 pt-24;
+
+        h2 {
+            @apply px-4 md:px-0;
+        }
+    }
+
     article {
-        @apply grid grid-cols-12 mb-20;
+        @apply flex flex-col md:grid md:grid-cols-12 px-1 mb-20;
 
         &:last-of-type {
             @apply mb-6;
@@ -286,7 +324,7 @@ section.work {
             z-index: 1;
             grid-column: 7 / -1;
             grid-area: 1 / 7 / -1 / -1;
-            @apply relative text-right pt-6;
+            @apply relative text-center md:text-right px-4 md:px-0 pt-6;
 
             h3 {
                 @apply mb-4;
@@ -297,7 +335,7 @@ section.work {
             }
 
             ul {
-                @apply flex flex-wrap justify-end mt-6;
+                @apply flex flex-wrap justify-center md:justify-end mt-6;
     
                 li {
                     @apply py-1 px-2 m-1 font-secondary border border-primary-400 text-primary-400 bg-secondary-700 rounded;
@@ -312,10 +350,10 @@ section.work {
 
             .project-content {
                 grid-column: 1 / 8;
-                @apply text-left;
+                @apply md:text-left;
 
                 ul {
-                    @apply justify-start;
+                    @apply md:justify-start;
                 }
             }
         }
@@ -354,7 +392,7 @@ footer {
     scroll-snap-align: end;
 
     .copyright {
-        @apply text-center text-secondary-500 bg-secondary-800 p-2;
+        @apply text-center text-secondary-500 bg-secondary-800 p-2 pb-10 md:pb-2;
     }
 
     a {

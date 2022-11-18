@@ -1,4 +1,5 @@
-const colors = require('tailwindcss/colors')
+const colors = require('tailwindcss/colors');
+const plugin = require('tailwindcss/plugin');
 
 module.exports = {
   purge: [
@@ -46,5 +47,16 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addUtilities }) {
+      const newUtilities = {
+        '.text-vertical': {
+          writingMode: 'vertical-lr'
+        }
+      }
+      addUtilities(newUtilities, {
+        variants: ['responsive']
+      })
+    })
+  ],
 }
